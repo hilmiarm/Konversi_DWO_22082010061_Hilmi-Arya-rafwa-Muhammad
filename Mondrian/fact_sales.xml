@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Schema name="fact_sales">
+
+	<Cube name="Sales" defaultMeasure="Total Amount">
+
+		<Table name="fact_sales" />
+		<Dimension name="Store" foreignKey="sk_store">
+			<Hierarchy name="Store" hasAll="true" allMemberName="All Store" primaryKey="sk_store">
+				<Table name="dim_store" />
+				<Level name="Store Country" column="store_country" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Dimension name="Customer Demographics" foreignKey="sk_customer">
+			<Hierarchy name="Customer Demographics" hasAll="true" allMemberName="All Countries" primaryKey="sk_customer">
+				<Table name="dim_customer" />
+				<Level name="Customer Country" column="customer_country" uniqueMembers="true" />
+				<Level name="Customer District" column="customer_district" uniqueMembers="true" />
+				<Level name="Customer City" column="customer_city" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Dimension name="Film Category" foreignKey="sk_film">
+			<Hierarchy name="Film Category" hasAll="true" allMemberName="All Categories" primaryKey="sk_film">
+				<Table name="dim_film" />
+				<Level name="Film Category" column="film_category" uniqueMembers="true" />
+        		<Level name="Film Title" column="title" uniqueMembers="true" />
+			</Hierarchy>
+		</Dimension>
+
+		<Measure name="Total Sales" column="sales_id" aggregator="count" formatString="#,##0" />
+		<Measure name="Total Amount" column="amount" aggregator="sum" formatString="#,##0.00" />
+	</Cube>
+
+</Schema>
